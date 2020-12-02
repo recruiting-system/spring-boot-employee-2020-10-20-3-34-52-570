@@ -21,4 +21,18 @@ public class EmployeeController {
         employees.add(employeeCreate);
         return employeeCreate;
     }
+
+    @PutMapping("/{employeeId}")
+    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee employeeUpdate) {
+
+        this.employees.stream()
+                .filter(employee -> employeeId.equals(employee.getId()))
+                .findFirst()
+                .ifPresent(employee -> {
+                    employees.remove(employee);
+                    employees.add(employeeUpdate);
+                });
+        return employeeUpdate;
+    }
+
 }
