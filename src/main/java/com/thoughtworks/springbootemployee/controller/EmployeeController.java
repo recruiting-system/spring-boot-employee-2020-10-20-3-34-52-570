@@ -45,6 +45,19 @@ public class EmployeeController {
         return employee;
     }
 
+    @PutMapping("/{employeeId}")
+    public Employee update(@PathVariable Integer employeeId, @RequestBody Employee employeeUpdate) {
+        this.employeeList.stream()
+            .filter(employee -> employeeId.equals(employee.getId()))
+            .findFirst()
+            .ifPresent(employee -> {
+                this.employeeList.remove(employee);
+                this.employeeList.add(employeeUpdate);
+            });
+
+        return employeeUpdate;
+    }
+
     @GetMapping("/{employeeId}")
     public Employee findEmployee(@PathVariable Integer employeeId) {
         return employeeList.stream().filter(employee -> employee.getId().equals(employeeId)).findFirst().orElse(null);
