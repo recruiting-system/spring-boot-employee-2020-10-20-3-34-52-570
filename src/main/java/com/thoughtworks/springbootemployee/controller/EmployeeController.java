@@ -29,6 +29,15 @@ public class EmployeeController {
             .collect(Collectors.toList());
     }
 
+    @GetMapping(params = {
+        "gender"
+    })
+    public List<Employee> getAll(@RequestParam("gender") String gender) {
+        return employeeList.stream()
+            .filter(employee -> gender.equals(employee.getGender()))
+            .collect(Collectors.toList());
+    }
+
     @PostMapping
     public Employee create(@RequestBody Employee employee) {
 
