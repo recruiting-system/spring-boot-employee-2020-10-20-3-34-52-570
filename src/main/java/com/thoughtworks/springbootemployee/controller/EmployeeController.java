@@ -24,8 +24,10 @@ public class EmployeeController {
     })
     public List<Employee> getAll(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
         int pageToSkip = page - 1;
+        int numberOfEmployeesToSkip = pageToSkip * pageSize;
+
         return employeeList.stream()
-            .skip(pageToSkip)
+            .skip(numberOfEmployeesToSkip)
             .limit(pageSize)
             .collect(Collectors.toList());
     }
