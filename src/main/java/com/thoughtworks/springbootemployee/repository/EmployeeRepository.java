@@ -11,6 +11,6 @@ public class EmployeeRepository {
     private List<Employee> employeeList = new ArrayList<>();
 
     public List<Employee> findAll() {
-        return null;
+        return employeeList;
     }
 }
