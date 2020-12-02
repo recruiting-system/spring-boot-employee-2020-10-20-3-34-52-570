@@ -24,8 +24,10 @@ public class EmployeeController {
     })
     public List<Employee> getAll(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
         int pageToSkip = page - 1;
+        int numberOfEmployeesToSkip = pageToSkip * pageSize;
+
         return employeeList.stream()
-            .skip(pageToSkip)
+            .skip(numberOfEmployeesToSkip)
             .limit(pageSize)
             .collect(Collectors.toList());
     }
@@ -70,6 +72,9 @@ public class EmployeeController {
 
     @GetMapping("/{employeeId}")
     public Employee findEmployee(@PathVariable Integer employeeId) {
-        return employeeList.stream().filter(employee -> employee.getId().equals(employeeId)).findFirst().orElse(null);
+        return employeeList.stream()
+            .filter(employee -> employee.getId().equals(employeeId))
+            .findFirst()
+            .orElse(null);
     }
 }
