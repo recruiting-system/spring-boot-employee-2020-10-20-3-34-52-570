@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employees")
@@ -14,6 +15,18 @@ public class EmployeeController {
     @GetMapping
     public List<Employee> getAll() {
         return this.employeeList;
+    }
+
+    @GetMapping(params = {
+        "page",
+        "pageSize"
+    })
+    public List<Employee> getAll(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        int pageToSkip = page - 1;
+        return employeeList.stream()
+            .skip(pageToSkip)
+            .limit(pageSize)
+            .collect(Collectors.toList());
     }
 
     @PostMapping
