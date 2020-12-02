@@ -13,7 +13,7 @@ public class EmployeeController {
     private List<Employee> employees = new ArrayList<>();
 
     @GetMapping
-    public List<Employee> getEmployeesList(){
+    public List<Employee> getEmployeesList() {
         return employees;
     }
 
@@ -47,7 +47,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public Employee getEmployeeByID(@PathVariable Integer employeeId){
+    public Employee getEmployeeByID(@PathVariable Integer employeeId) {
         return this.employees.stream()
                 .filter(employee -> employeeId.equals(employee.getId()))
                 .findFirst().get();
@@ -60,10 +60,14 @@ public class EmployeeController {
                 .collect(Collectors.toList());
     }
 
-
-
-
-
+    @GetMapping(params = {"page", "pageSize"})
+    public List<Employee> getEmployeeByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        int pageToSkip = page - 1;
+        return employees.stream()
+                .skip(pageToSkip * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
 
 
 }
