@@ -45,6 +45,14 @@ public class EmployeeController {
                 });
     }
 
+    @GetMapping("/{employeeId}")
+    public Employee getEmployeeByID(@PathVariable Integer employeeId){
+        return this.employees.stream()
+                .filter(employee -> employeeId.equals(employee.getId()))
+                .findFirst().get();
+    }
+
+
 
 
 }
