@@ -22,4 +22,9 @@ public class EmployeeController {
         this.employeeList.add(employee);
         return employee;
     }
+
+    @GetMapping("/{employeeId}")
+    public Employee findEmployee(@PathVariable Integer id) {
+        return employeeList.stream().filter(employee -> employee.getId().equals(id)).findFirst().orElse(null);
+    }
 }
